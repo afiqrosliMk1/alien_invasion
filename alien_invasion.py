@@ -2,27 +2,31 @@ import sys
 
 import pygame
 
-def run_game():
-    # Initialize game and create a screen object.
-    pygame.init()
-    screen = pygame.display.set_mode((1200, 800))
-    pygame.display.set_caption('Alien Invasion')
+class AlienInvasion:
+    """Overall class to manage game assets and behaviour."""
 
-    # Set the background color.
-    bg_color = (230, 230, 23)
+    def __init__( self ):
+        """Initialize the game, and create game resources."""
+        pygame.init()
 
-    # Start the main loop for the game.
-    while True:
+        self.screen = pygame.display.set_mode( ( 1200 , 800 ) )
+        pygame.display.set_caption( "Alien Invasion" )
 
-        # Watch for keyboard and mouse events.
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
+    def run_game( self ):
+        """Start the main loop for the game."""
+        while True:
+            # Watch for keyboard and mouse events.
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    sys.exit()
 
-        # Redraw the screen during each pass through the loop.
-        screen.fill(bg_color)
+            # Make the most recently drawn screen visible.
+            pygame.display.flip()
 
-        # Make the most recently drawn screen visible.
-        pygame.display.flip()
+if __name__ == '__main__':
+    # Make a game instance, and run the game.
+    ai = AlienInvasion()
+    ai.run_game()
 
-run_game()
+
+
