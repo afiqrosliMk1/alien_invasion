@@ -47,9 +47,14 @@ class AlienInvasion:
                     if event.key == pygame.K_RIGHT:
                         # Move ship to the right. ship.rect is the variable that stores rect object returned by .get_rect(). It is also passed to blitme to as coordinate. 
                         self.ship.moving_right = True
+                    elif event.key == pygame.K_LEFT:
+                        self.ship.moving_left = True
+                        print("left key hold")
                 elif event.type == pygame.KEYUP:
                     if event.key == pygame.K_RIGHT:
-                        self.ship.moving_right = False                
+                        self.ship.moving_right = False
+                    elif event.key == pygame.K_LEFT:
+                        self.ship.moving_left = False                
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen"""
