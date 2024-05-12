@@ -14,6 +14,14 @@ class Ship():
         #Start each new ship at the bottom center of the screen
         self.rect.midbottom = self.screen_rect.midbottom
 
+        #Movement flag; start with a ship that's not moving
+        self.moving_right = False
+
+    def update(self):
+        """Update position based on movement flag"""
+        if self.moving_right:
+            self.rect.x += 1
+
     def blitme(self):
         """Draw the ship at its current location"""
         #Note: blit can receive coordinate tuple for second argument OR a Rect object
