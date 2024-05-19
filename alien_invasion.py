@@ -47,14 +47,8 @@ class AlienInvasion:
             # Update ship position
             self.ship.update()
 
-            # Update bullet position
-            self.bullets.update()
-
-            # Remove bullet that disappeared from memory
-            for bullet in self.bullets.copy():
-                if bullet.rect.bottom <= 0:
-                    self.bullets.remove(bullet)
-            print(len(self.bullets))
+            # Update bullets
+            self._update_bullets()
 
             # Make the most recently drawn screen visible.
             self._update_screen()
@@ -97,6 +91,17 @@ class AlienInvasion:
             self.bullets.add(new_bullet)
         else:
             pass
+
+    def _update_bullets(self):
+        """Update position of bullets and get rid of old bullets"""
+        # Update bullet position
+        self.bullets.update()
+
+        # Remove bullet that disappeared from memory
+        for bullet in self.bullets.copy():
+            if bullet.rect.bottom <= 0:
+                self.bullets.remove(bullet)
+        print(len(self.bullets))
 
     def _update_screen(self):
         """Update images on the screen, and flip to the new screen"""
