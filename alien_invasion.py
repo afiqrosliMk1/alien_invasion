@@ -50,6 +50,12 @@ class AlienInvasion:
             # Update bullet position
             self.bullets.update()
 
+            # Remove bullet that disappeared from memory
+            for bullet in self.bullet.copy():
+                if bullet.rect.bottom <= 0:
+                    self.bullets.remove(bullet)
+            print(len(self.bullets))
+
             # Make the most recently drawn screen visible.
             self._update_screen()
 
@@ -97,7 +103,7 @@ class AlienInvasion:
         # Blit bullet
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
-            
+
         # Blit ship
         self.ship.blitme()
 
