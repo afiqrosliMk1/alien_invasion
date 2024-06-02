@@ -57,6 +57,9 @@ class AlienInvasion:
             # Update bullets
             self._update_bullets()
 
+            # Update aliens position
+            self._update_aliens()
+
             # Make the most recently drawn screen visible.
             self._update_screen()
 
@@ -109,6 +112,10 @@ class AlienInvasion:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
         #print(len(self.bullets))
+
+    def _update_aliens(self):
+        """Update the position of all aliens in the fleet"""
+        self.aliens.update()
 
     def _create_fleet(self):
         """Create the fleet of aliens"""
