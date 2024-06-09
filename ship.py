@@ -37,6 +37,11 @@ class Ship():
         """Draw the ship at its current location"""
         #Note: blit can receive coordinate tuple for second argument OR a Rect object
         self.screen.blit(self.image, self.rect)
+
+    def center_ship(self):
+        """Put ship at center"""
+        self.rect.midbottom = self.screen_rect.midbottom
+        self.x = float(self.rect.x)
         
 
         
