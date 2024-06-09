@@ -118,6 +118,11 @@ class AlienInvasion:
         #  The two True arguments tell pygame to delete bullets and aliens that collided
         collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
 
+        if not self.aliens:
+            # Destroy existing bullets and create new fleet.
+            self.bullets.empty()
+            self._create_fleet()
+            
     def _update_aliens(self):
         """Check if the fleet is at an edge, then update positions"""
         self._check_fleet_edges()
