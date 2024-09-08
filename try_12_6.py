@@ -1,44 +1,120 @@
+# import pygame
+
+# import sys
+
+# import pygame.image
+
+# pygame.init()
+
+# #create screen
+# screen = pygame.display.set_mode((400, 400))
+# pygame.display.set_caption("sideway shooter")
+
+# #create ship
+# ship = pygame.image.load("images/ship.bmp").convert()
+
+# #rotate image
+# ship = pygame.transform.rotate(ship, -90)
+
+# print(ship.get_at((2, 2)))
+
+# #set colorkey
+# pygame.Surface.set_colorkey(ship, (230, 230, 230))
+
+# #get rect
+# screen_rect = screen.get_rect()
+# ship_rect = ship.get_rect()
+
+# #start the ship at mid left
+# ship_rect.y = screen_rect.midleft[1] - ship_rect.height / 2
+
+# #movement flag
+# move_up_flag = False
+# move_down_flag = False
+
+# #bullet
+# bullet_list = []
+
+# #speed
+# speed = 2
+
+
+
+# clock = pygame.time.Clock()
+
+# while True:
+#     for event in pygame.event.get():
+#         if event.type == pygame.QUIT:
+#             pygame.quit()
+#             sys.exit()
+#         elif event.type == pygame.KEYDOWN:
+#             if event.key == pygame.K_UP:
+#                 move_up_flag = True
+#             elif event.key == pygame.K_DOWN:
+#                 move_down_flag = True
+#             elif event.key == pygame.K_SPACE:
+#                 if len(bullet_list) < 5:
+#                     bullet = pygame.Rect(ship_rect.midright[0], ship_rect.midright[1], 8, 3)
+#                     bullet_list.append(bullet)
+                
+#         elif event.type == pygame.KEYUP:
+#             if event.key == pygame.K_UP:
+#                 move_up_flag = False
+#             elif event.key == pygame.K_DOWN:
+#                 move_down_flag = False
+
+#     if move_up_flag:
+#         if ship_rect.y > 0:
+#             ship_rect.y -= 1 + speed
+#     if move_down_flag:
+#         if ship_rect.bottom < screen_rect.height:
+#             ship_rect.y += 1 + speed
+
+#     screen.fill((0, 0, 0))
+
+#     if bullet_list:
+#         for bullet in bullet_list:
+#             if bullet.x < screen.get_width():
+#                 bullet.x += 1 + speed
+#                 pygame.draw.rect(screen, (251, 25, 25), bullet)
+#             else:
+#                 bullet_list.remove(bullet)
+#        # print(len(bullet_list))
+
+    
+
+#     screen.blit(ship, ship_rect)
+
+#     pygame.display.flip()
+
+#     clock.tick(60)
+
+
 import pygame
 
 import sys
 
-import pygame.image
-
 pygame.init()
 
-#create screen
-screen = pygame.display.set_mode((400, 400))
-pygame.display.set_caption("sideway shooter")
-
-#create ship
-ship = pygame.image.load("images/ship.bmp").convert()
-
-#rotate image
-ship = pygame.transform.rotate(ship, -90)
-
-print(ship.get_at((2, 2)))
-
-#set colorkey
-pygame.Surface.set_colorkey(ship, (230, 230, 230))
-
-#get rect
+screen = pygame.display.set_mode((240, 240))
 screen_rect = screen.get_rect()
-ship_rect = ship.get_rect()
 
-#start the ship at mid left
-ship_rect.y = screen_rect.midleft[1] - ship_rect.height / 2
+bg_color = ("pink")
 
-#movement flag
-move_up_flag = False
-move_down_flag = False
+rocket = pygame.image.load("images/ship.bmp").convert()
+rocket_rect = rocket.get_rect()
+rocket_rect.centerx = screen_rect.centerx
+rocket_rect.centery = screen_rect.centery
+rocket = pygame.transform.rotate(rocket, -90)
 
-#bullet
-bullet_list = []
+pygame.Surface.set_colorkey(rocket, (230, 230, 230))
 
-#speed
-speed = 2
+moving_up = False
+moving_down = False
+moving_right = False
+moving_left = False
 
-
+bullets = []
 
 clock = pygame.time.Clock()
 
@@ -49,45 +125,39 @@ while True:
             sys.exit()
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
-                move_up_flag = True
-            elif event.key == pygame.K_DOWN:
-                move_down_flag = True
-            elif event.key == pygame.K_SPACE:
-                if len(bullet_list) < 5:
-                    bullet = pygame.Rect(ship_rect.midright[0], ship_rect.midright[1], 8, 3)
-                    bullet_list.append(bullet)
-                
+                moving_up = True
+            if event.key == pygame.K_DOWN:
+                moving_down = True
+            if event.key == pygame.K_SPACE:
+                bullet = pygame.Rect(rocket_rect.centerx, rocket_rect.midright[1], 10, 5)
+                bullets.append(bullet)
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_UP:
-                move_up_flag = False
-            elif event.key == pygame.K_DOWN:
-                move_down_flag = False
+                moving_up = False
+            if event.key == pygame.K_DOWN:
+                moving_down = False
 
-    if move_up_flag:
-        if ship_rect.y > 0:
-            ship_rect.y -= 1 + speed
-    if move_down_flag:
-        if ship_rect.bottom < screen_rect.height:
-            ship_rect.y += 1 + speed
+    #update rocket
+    if moving_up:
+        rocket_rect.y -= 1
+    if moving_down:
+        rocket_rect.y += 1
+    if moving_right:
+        pass
+    if moving_left:
+        pass
+    #update bullet
+    for bullet in bullets:
+        if bullet.x < screen_rect.right:
+            bullet.x += 1
+        else:
+            bullets.remove(bullet)
+    print(len(bullets))
 
-    screen.fill((0, 0, 0))
-
-    if bullet_list:
-        for bullet in bullet_list:
-            if bullet.x < screen.get_width():
-                bullet.x += 1 + speed
-                pygame.draw.rect(screen, (251, 25, 25), bullet)
-            else:
-                bullet_list.remove(bullet)
-       # print(len(bullet_list))
-
-    
-
-    screen.blit(ship, ship_rect)
-
+    screen.fill(bg_color)
+    screen.blit(rocket, rocket_rect)
+    if bullets:
+        for bullet in bullets:
+            pygame.draw.rect(screen, (20, 20, 20), bullet)
     pygame.display.flip()
-
     clock.tick(60)
-
-
-
